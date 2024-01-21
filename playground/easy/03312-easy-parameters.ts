@@ -20,7 +20,7 @@
 
 /* _____________ Your Code Here _____________ */
 
-type MyParameters<T extends (...args: any[]) => any> = any
+type MyParameters<T extends (...args: any[]) => any> = T extends (...args: infer P) => any ? P : never
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
@@ -32,7 +32,7 @@ function baz(): void {}
 type cases = [
   Expect<Equal<MyParameters<typeof foo>, [string, number]>>,
   Expect<Equal<MyParameters<typeof bar>, [boolean, { a: 'A' }]>>,
-  Expect<Equal<MyParameters<typeof baz>, []>>
+  Expect<Equal<MyParameters<typeof baz>, []>>,
 ]
 
 /* _____________ Further Steps _____________ */
